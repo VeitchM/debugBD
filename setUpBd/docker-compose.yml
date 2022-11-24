@@ -1,0 +1,48 @@
+version: '3.7'
+
+services:
+  app:
+    container_name: sio
+    #image: 1110:1110
+    image: pruebaimpresiones:pruebaimpresiones
+    env_file:
+      - ./env/production.env
+    networks:
+      - webnet
+    volumes:
+      - ../../../BackupFiles/PPS/files:/home/node/app/files
+      - ./logs:/home/node/app/logs
+      - ./public:/home/node/app/public
+      - ./secrets:/home/node/app/secrets
+      - ./credentials:/home/node/app/credentials
+      
+    ports:
+      - 443:${APP_PORT}
+    depends_on:
+      - postgres
+    restart: unless-stopped
+  postgres:
+    container_name: postgres
+    build:
+      context: ./database
+    image: postgres-sio:1.0.0
+    environment:
+      POSTGRES_DB: ${TYPEORM_DATABASE}
+      POSTGRES_USER: ${TYPEORM_USERNAME}
+      POSTGRES_PASSWORD: ${TYPEORM_PASSWORD}
+      PG_DATA: /var/lib/postgresql/data
+    networks:
+      - webnet
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+
+networks:
+  webnet:
+    name: webnet
+
+volumes:
+  pgdata:
+    name: pgdata_beta
