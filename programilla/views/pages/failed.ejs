@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+<header>
+  <%- include('../partials/header'); %>
+</header>
+
+<main>
+  <div class="jumbotron">
+    <h1>DebugDB SIO CEI</h1>
+    <p>Este servidor elimina los duplicados de la BD</p>
+
+    <h2>Hubo un error</h2>
+    <p><%- DBAnswer %> </p>
+
+    <h3>Ultima vez Utilizado</h3>
+    <p><%- lastCleaning %> </p>
+
+    
+  </div>
+</main>
+
+<footer>
+  <%- include('../partials/footer'); %>
+</footer>
+
+</body>
+</html>
